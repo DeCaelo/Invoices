@@ -15,7 +15,7 @@ $(document).ready(function(){
   });
 
   $('#addrow').click(function(){
-    $('.item-row:last').after('<tr class="item-row"><td><input class="form-control item_name" placeholder="Item name" /></td><td><input class="form-control item_desc" placeholder="Item description" /></td><td><input class="form-control cost" value="0.00" /></td><td><input class="form-control qty" value="0" /></td><td class="price_td"><span class="price">0.00</span><span class="subtotal_currency"></span></td><td class="delete_td"><a class="delete" href="javascript:;" title="Remove row"><span class="ti-close"></span></a></td></tr>');
+    $('.item-row:last').after('<tr class="item-row"><td><input class="form-control item_name" placeholder="Item name" /></td><td><input class="form-control item_desc" placeholder="Item description" /></td><td><input class="form-control cost" value="0.00" /></td><td><input class="form-control qty" value="0" /></td><td class="price_td"><span class="price">0.00</span><span class="subtotal_currency"></span></td><td class="delete_td"><a class="delete" href="javascript:;" title="Remove row"><span class="fa fa-trash-o"></span></a></td></tr>');
     if ($('.delete').length > 0) $('.delete').show();
     bind1();
   });
@@ -43,6 +43,40 @@ $(document).ready(function(){
     var e = $('#invoice_total').text();
     $('#invoice_total1').empty();
     $('#invoice_total1').val(Number(e));
+  });
+
+  $('body').on('click', '#invoice_button', function(){
+    for (var i =1; i < 11; i++){
+      var id = i.toString();
+      bind($('#' + id), $("#modal_" + id));
+    }
+
+    bind2($('#subtotal'), $("#modal_subtotal"));
+    bind2($('#invoice_number'), $("#modal_invoice_number"));
+
+    var rows = $('.item-row');
+    $("#modal_tbody").empty();
+
+    for (i = 0; i < rows.length; i++){
+      var row = rows[i];
+      var name = $(row).find(".item_name").val();
+      $('#modal_tbody').append('<tr class="modal-item-row"></tr>');
+      $('.modal-item-row:last').append('<td>' + name + '</td>');
+
+      var desc = $(row).find(".item_desc").val();
+      $('.modal-item-row:last').append('<td>' + desc + '</td>');
+
+      var cost = $(row).find(".cost").val();
+      $('.modal-item-row:last').append('<td>' + cost + '</td>');
+
+      var qty = $(row).find(".qty").val();
+      $('.modal-item-row:last').append('<td>' + qty + '</td>');
+
+      var price = $(row).find(".price").text();
+      var curr = $('#invoice_currency').val();
+      $('.modal-item-row:last').append('<td>' + price + ' ' + '<span>' + curr + '</span></td>');
+    }
+
   });
 
 });

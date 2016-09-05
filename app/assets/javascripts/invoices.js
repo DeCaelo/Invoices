@@ -30,3 +30,15 @@ function update_balance() {
 
   $('.due').html(total);
 }
+
+function bind(main, modal) {
+  var n = main.val();
+  modal.empty();
+  modal.append(n);
+}
+
+function bind2(main, modal) {
+  var n = main.text();
+  modal.empty();
+  modal.append(" " + n);
+}
